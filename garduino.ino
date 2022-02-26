@@ -14,7 +14,7 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
 
-  // Take the average of moisture levels over 100 milliseconds to make the data more stable
+  // Take the average of moisture levels over 1 second to make the data more stable
    for (int i = 0; i <= 100; i++) 
    { 
     sensorValue = sensorValue + analogRead(MOISTURESENSOR); 
