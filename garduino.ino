@@ -1,14 +1,15 @@
-#define MOISTURESENSOR A0
-#define WATERPUMP A1
-
-// Max amount for the moisture sensor is around 500, so 200 is roughly 40% moisture
-int dry = 200;
+// The pins for the sensor and pump are placeholders for now
+#define MOISTURE_SENSOR A0
+#define WATER_PUMP A1
+// The max water level for the moisture sensor is about 500, so 200 is ~40% moisture
+#define DRY 200
+int sensorValue;
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
 
   // Set water pump to output
-  pinMode(WATERPUMP, OUTPUT);
+  pinMode(WATER_PUMP, OUTPUT);
 }
 
 void loop() {
@@ -17,20 +18,21 @@ void loop() {
   // Take the average of moisture levels over 1 second to make the data more stable
    for (int i = 0; i <= 100; i++) 
    { 
-    sensorValue = sensorValue + analogRead(MOISTURESENSOR); 
+    sensorValue = sensorValue + analogRead(MOISTURE_SENSOR); 
     delay(10); 
    } 
    sensorValue = sensorValue/100.0; 
 
    // Turn sensor on if the soil is too dry
-   if (sensorValue < dry)
+   if (sensorValue < DRY)
     {
-      // turn on pump 10 seconds
-      digitalWrite(WATERPUMP, HIGH); 
-      delay(10000);
+      // The pump can pump 240L/hour, or about 66.6 ml/sec, so to pump out 2 liters we turn the pump on for 30 seconds
+      // turn on pump 30 seconds
+      digitalWrite(WATER_PUMP, HIGH); 
+      delay(30000);
     }
 
-   // Turn water pump off
-    digitalWrite(WATERPUMP, LOW);
-    delay(10000);
+   // Turn water pump off for 20 seconds
+    digitalWrite(WATER_PUMP, LOW);
+    delay(20000);
 }
