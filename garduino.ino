@@ -12,9 +12,18 @@ void setup() {
   pinMode(WATER_PUMP, OUTPUT);
 }
 
+void sensorOn() 
+{
+  analogWrite(MOISTURE_SENSOR, 255);
+}
+
+void sensorOff()
+{
+  analogWrite(MOISTURE_SENSOR, 0);
+}
 void loop() {
   // put your main code here, to run repeatedly:
-
+sensorOn();
   // Take the average of moisture levels over 1 second to make the data more stable
    for (int i = 0; i <= 100; i++) 
    { 
@@ -28,11 +37,14 @@ void loop() {
     {
       // The pump can pump 240L/hour, or about 66.6 ml/sec, so to pump out 2 liters we turn the pump on for 30 seconds
       // turn on pump 30 seconds
+     sensorOff();
       digitalWrite(WATER_PUMP, HIGH); 
       delay(30000);
+     
     }
 
    // Turn water pump off for 20 seconds
     digitalWrite(WATER_PUMP, LOW);
+  sensorOff();
     delay(20000);
 }
